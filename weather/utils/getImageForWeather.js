@@ -3,8 +3,8 @@
 const images = {
   Clear: require('../assets/clear.png'),
   Hail: require('../assets/hail.png'),
-  'Heavy Cloud': require('../assets/heavy-cloud.png'),
-  'Light Cloud': require('../assets/light-cloud.png'),
+  'Overcast': require('../assets/heavy-cloud.png'),
+  'Partly cloudy': require('../assets/light-cloud.png'),
   'Heavy Rain': require('../assets/heavy-rain.png'),
   'Light Rain': require('../assets/light-rain.png'),
   Showers: require('../assets/showers.png'),

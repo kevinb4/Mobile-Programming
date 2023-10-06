@@ -20,6 +20,10 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+    console.log('Component has mounted!');
+  }
+
   handleUpdateLocation = city => {
     this.setState({
       location: city,

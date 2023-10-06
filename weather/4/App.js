@@ -14,6 +14,8 @@ import SearchInput from './components/SearchInput';
 
 export default class App extends React.Component {
   render() {
+    const location = 'San Francisco';
+
     return (
       <KeyboardAvoidingView
         style={styles.container}
@@ -26,7 +28,7 @@ export default class App extends React.Component {
         >
           <View style={styles.detailsContainer}>
             <Text style={[styles.largeText, styles.textStyle]}>
-              San Francisco
+              {location}
             </Text>
             <Text style={[styles.smallText, styles.textStyle]}>
               Light Cloud
