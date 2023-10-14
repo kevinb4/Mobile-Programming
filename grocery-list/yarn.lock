@@ -2329,7 +2329,7 @@
     "sentence-case" "^1.1.1"
     "snake-case" "^1.1.0"
     "swap-case" "^1.1.0"
-    "title-case" "^1.1.0"
+    "item-case" "^1.1.0"
     "upper-case" "^1.1.1"
     "upper-case-first" "^1.1.0"
 
@@ -8204,9 +8204,9 @@
   "resolved" "https://registry.npmjs.org/tiny-queue/-/tiny-queue-0.2.1.tgz"
   "version" "0.2.1"
 
-"title-case@^1.1.0":
+"item-case@^1.1.0":
   "integrity" "sha1-+uSmrlRr+iLQg6DuqRCkDRLtT1o="
-  "resolved" "https://registry.npmjs.org/title-case/-/title-case-1.1.2.tgz"
+  "resolved" "https://registry.npmjs.org/item-case/-/item-case-1.1.2.tgz"
   "version" "1.1.2"
   dependencies:
     "sentence-case" "^1.1.1"

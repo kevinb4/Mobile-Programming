@@ -2,94 +2,109 @@ import { StyleSheet, View, Text, TextInput } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import TimerButton from './TimerButton';
+import ItemButton from './Button';
 
-export default class TimerForm extends React.Component {
+export default class EditItemForm extends React.Component {
   static propTypes = {
     id: PropTypes.string,
-    title: PropTypes.string,
-    project: PropTypes.string,
+    item: PropTypes.string,
+    quantity: PropTypes.number,
+    isPurchased: PropTypes.bool,
     onFormSubmit: PropTypes.func.isRequired,
     onFormClose: PropTypes.func.isRequired,
   };
 
   static defaultProps = {
     id: null,
-    title: '',
-    project: '',
+    item: '',
+    quantity: 0,
+    isPurchased: false,
   };
 
   constructor(props) {
     super(props);
 
-    const { id, title, project } = props;
+    const { id, item, quantity, isPurchased } = props;
 
     this.state = {
-      title: id ? title : '',
-      project: id ? project : '',
+      item: id ? item : '',
+      quantity: id ? quantity : 0,
+      isPurchased: id ? isPurchased : false,
     };
   }
 
-  handleTitleChange = title => {
-    this.setState({ title });
+  handleItemChange = item => {
+    this.setState({ item });
   };
 
-  handleProjectChange = project => {
-    this.setState({ project });
+  handleQuantityChange = quantity => {
+    quantity = parseInt(quantity)
+    if (isNaN(quantity))
+    {
+      quantity = 1;
+    }
+
+    this.setState({ quantity });
   };
 
   handleSubmit = () => {
-    const { onFormSubmit, id } = this.props;
-    const { title, project } = this.state;
+    const { onFormSubmit, id, isPurchased } = this.props;
+    const { item, quantity } = this.state;
 
     onFormSubmit({
       id,
-      title,
-      project,
+      item,
+      quantity,
+      isPurchased,
     });
   };
 
   render() {
-    const { id, onFormClose } = this.props;
-    const { title, project } = this.state;
+    const { id, onFormClose, isPurchased } = this.props;
+    const { item, quantity } = this.state;
 
     const submitText = id ? 'Update' : 'Create';
+    const purchaseStatus = isPurchased ? 'This item has been purchased' : 'This item has not yet been purchased';
 
     return (
       <View style={styles.formContainer}>
         <View style={styles.attributeContainer}>
-          <Text style={styles.textInputTitle}>Dog's Name</Text>
+          <Text style={styles.textInputitem}>Item</Text>
           <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
               underlineColorAndroid="transparent"
-              onChangeText={this.handleTitleChange}
-              value={title}
+              onChangeText={this.handleItemChange}
+              value={item}
             />
           </View>
         </View>
         <View style={styles.attributeContainer}>
-          <Text style={styles.textInputTitle}>Service</Text>
+          <Text style={styles.textInputitem}>Quantity</Text>
           <View style={styles.textInputContainer}>
             <TextInput
+              keyboardType="numeric"
               style={styles.textInput}
               underlineColorAndroid="transparent"
-              onChangeText={this.handleProjectChange}
-              value={project}
+              onChangeText={this.handleQuantityChange}
+              value={quantity.toString()}
             />
           </View>
         </View>
+        <View style={styles.attributeContainer}>
+          <Text style={styles.purchaseStatus}>{purchaseStatus}</Text>
+        </View>
         <View style={styles.buttonGroup}>
-          <TimerButton
+          <ItemButton
             small
             color="#21BA45"
-            title={submitText}
+            item={submitText}
             onPress={this.handleSubmit}
           />
-          <TimerButton
+          <ItemButton
             small
             color="#DB2828"
-            title="Cancel"
+            item="Cancel"
             onPress={onFormClose}
           />
         </View>
@@ -122,10 +137,14 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 12,
   },
-  textInputTitle: {
+  textInputitem: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,
+  },
+  purchaseStatus: {
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   buttonGroup: {
     flexDirection: 'row',

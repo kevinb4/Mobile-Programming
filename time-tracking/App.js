@@ -1,5 +1,7 @@
 import React from 'react';
-import uuidv4 from 'uuid/v4';
+import 'react-native-get-random-values';
+import { v4 as uuidv4 } from "uuid";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 import {
   StyleSheet,
@@ -12,31 +14,32 @@ import {
 import { newTimer } from './utils/TimerUtils';
 import EditableTimer from './components/EditableTimer';
 import ToggleableTimerForm from './components/ToggleableTimerForm';
+import ClientMessage from './components/Button';
 
 export default class App extends React.Component {
   state = {
     timers: [
-      {
-        title: 'Mow the lawn',
-        project: 'House Chores',
-        id: uuidv4(),
-        elapsed: 5460494,
-        isRunning: false,
-      },
-      {
-        title: 'Clear paper jam',
-        project: 'Office Chores',
-        id: uuidv4(),
-        elapsed: 1277537,
-        isRunning: false,
-      },
-      {
-        title: 'Ponder origins of universe',
-        project: 'Life Chores',
-        id: uuidv4(),
-        elapsed: 120000,
-        isRunning: true,
-      },
+      // {
+      //   title: 'Mow the lawn',
+      //   project: 'House Chores',
+      //   id: uuidv4(),
+      //   elapsed: 5460494,
+      //   isRunning: false,
+      // },
+      // {
+      //   title: 'Clear paper jam',
+      //   project: 'Office Chores',
+      //   id: uuidv4(),
+      //   elapsed: 1277537,
+      //   isRunning: false,
+      // },
+      // {
+      //   title: 'Ponder origins of universe',
+      //   project: 'Life Chores',
+      //   id: uuidv4(),
+      //   elapsed: 120000,
+      //   isRunning: true,
+      // },
     ],
   };
 
@@ -122,9 +125,15 @@ export default class App extends React.Component {
     const { timers } = this.state;
 
     return (
+      <KeyboardAwareScrollView
+        extraScrollHeight={100}
+        enableOnAndroid={true}
+        keyboardShouldPersistTaps='handled'
+        style={styles.timerListContainer}
+      >
       <View style={styles.appContainer}>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Timers</Text>
+          <Text style={styles.title}>Clients</Text>
         </View>
         <KeyboardAvoidingView
           behavior="padding"
@@ -150,9 +159,11 @@ export default class App extends React.Component {
                 />
               ),
             )}
+            <ClientMessage></ClientMessage>
           </ScrollView>
         </KeyboardAvoidingView>
       </View>
+      </KeyboardAwareScrollView>
     );
   }
 }
