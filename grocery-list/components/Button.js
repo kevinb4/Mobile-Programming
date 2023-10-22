@@ -44,10 +44,7 @@ Button.defaultProps = {
 
 const styles = StyleSheet.create({
   button: {
-    marginTop: 10,
     minWidth: 100,
-    borderWidth: 2,
-    borderRadius: 3,
   },
   small: {
     fontSize: 14,
@@ -64,11 +61,5 @@ const styles = StyleSheet.create({
   item: {
     fontSize: 14,
     fontWeight: 'bold',
-  },
-  elapsedTime: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 10,
   },
 });

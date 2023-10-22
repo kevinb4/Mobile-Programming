@@ -19,6 +19,10 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "splash": {
+      "image": "./assets/splash_grocery.png",
+      "resizeMode": "cover"
     }
   }
 }

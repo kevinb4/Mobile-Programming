@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from 'react-native';
+import { StyleSheet, View, Text, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
@@ -9,6 +9,7 @@ export default class Item extends Component {
     id: PropTypes.string.isRequired,
     item: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
+    image: PropTypes.number,
     isPurchased: PropTypes.bool.isRequired,
     onEditPress: PropTypes.func.isRequired,
     onRemovePress: PropTypes.func.isRequired,
@@ -39,45 +40,53 @@ export default class Item extends Component {
 
     if (isPurchased) {
       return (
-        <Button
-          color="#DB2828"
+        <View style={[ styles.button, {backgroundColor: '#DB2828' }]}><Button
+          color="white"
           item="Remove Purchase"
           onPress={this.handleRemovePurchase}
-        />
+        /></View>
       );
     } else {
       return (
-        <Button
-          color="#21BA45"
+        <View style={[ styles.button, {backgroundColor: '#21BA45' }]}><Button
+          color="white"
           item="Purchase"
           onPress={this.handlePurchase}
-        />
+        /></View>
       );
     }
-
-    
   }
 
   render() {
-    const { item, quantity, onEditPress } = this.props;
+    const { item, quantity, onEditPress, image } = this.props;
+
+    var source = image || require('../assets/products/placeholder.png');
 
     return (
       <View style={styles.itemContainer}>
-        <Text>Quantity Needed: {quantity}</Text>
-        <Text style={styles.elapsedTime}>{item}</Text>
+        <View style={styles.row}>
+          <Text style={styles.item}>{item}</Text>
+          <Text style={styles.quantity}>Quantity: {quantity}</Text>
+        </View>
+        <View style={styles.imageBox}>
+          <Image
+              source={source}
+              style={styles.image}
+          />
+        </View>
         <View style={styles.buttonGroup}>
-          <Button
-            color="blue"
+        <View style={[ styles.button, {backgroundColor: 'blue' }]}><Button
+            color="white"
             small
             item="Edit"
             onPress={onEditPress}
-          />
-          <Button
-            color="blue"
+          /></View>
+          <View style={[ styles.button, {backgroundColor: 'blue' }]}><Button
+            color="white"
             small
             item="Remove"
             onPress={this.handleRemovePress}
-          />
+          /></View>
         </View>
         {this.renderActionButton()}
       </View>
@@ -99,14 +108,31 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
   },
-  elapsedTime: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    paddingVertical: 15,
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  imageBox: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  button: {
+    borderRadius: 5,
+    marginTop: 5,
+    marginBottom: 5,
+    margin: 'auto'
   },
   buttonGroup: {
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  quantity: {
+    textAlign: 'right'
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  }
 });

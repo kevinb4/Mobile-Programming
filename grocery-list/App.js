@@ -14,7 +14,10 @@ import {
 } from 'react-native';
 
 import EditableItem from './components/EditableItem';
-import ToggleableItemForm from './components/ToggleableItemForm';
+import Avatar from './components/Avatar';
+import getAvatarColor from './utils/getAvatarColor';
+import getInitials from './utils/getInitials';
+// import ToggleableItemForm from './components/ToggleableItemForm';
 
 const backgroundImage = require('./assets/grocery.jpg');
 
@@ -22,14 +25,37 @@ export default class App extends React.Component {
   state = {
     items: [
       {
+        item: 'Bread',
+        quantity: 1,
+        image: require('./assets/products/bread.jpg'),
+        id: uuidv4(),
+        isPurchased: false,
+      },
+      {
+        item: 'Milk',
+        quantity: 1,
+        image: require('./assets/products/milk.png'),
+        id: uuidv4(),
+        isPurchased: false,
+      },
+      {
+        item: 'Olive Oil',
+        quantity: 1,
+        image: require('./assets/products/oliveoil.jpg'),
+        id: uuidv4(),
+        isPurchased: false,
+      },
+      {
         item: 'Cereal',
         quantity: 1,
+        image: require('./assets/products/cereal.jpg'),
         id: uuidv4(),
-        isPurchased: true,
+        isPurchased: false,
       },
       {
         item: 'Carrots',
         quantity: 1,
+        image: require('./assets/products/carrots.jpg'),
         id: uuidv4(),
         isPurchased: false,
       },
@@ -95,6 +121,7 @@ export default class App extends React.Component {
 
   render() {
     const { items } = this.state;
+    const fullname = "Kevin Baran";
 
     return (
       <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.imageContainer}>
@@ -108,22 +135,29 @@ export default class App extends React.Component {
       <View style={styles.appContainer}>
         <View style={styles.itemContainer}>
           <Text style={styles.item}>Grocery List</Text>
+          <Avatar
+            size={35}
+            initials={getInitials(fullname)}
+            backgroundColor={getAvatarColor(fullname)}
+          />
         </View>
         <KeyboardAvoidingView
           behavior="padding"
           style={styles.itemListContainer}
         >
           <ScrollView contentContainerStyle={styles.itemList}>
-            <ToggleableItemForm
+            {/* this is no longer in the main app according to the example images*/}
+            {/* <ToggleableItemForm
               onFormSubmit={this.handleCreateFormSubmit}
-            />
+            /> */}
             {items.map(
-              ({ item, quantity, id, isPurchased }) => (
+              ({ item, quantity, id, isPurchased, image }) => (
                 <EditableItem
                   key={id}
                   id={id}
                   item={item}
                   quantity={quantity}
+                  image={image}
                   isPurchased={isPurchased}
                   onFormSubmit={this.handleFormSubmit}
                   onRemovePress={this.handleRemovePress}
@@ -158,12 +192,13 @@ const styles = StyleSheet.create({
     paddingBottom: 15,
     borderBottomWidth: 1,
     borderBottomColor: '#D6D7DA',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   item: {
     fontSize: 18,
     fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#fff'
+    color: '#fff',
   },
   itemListContainer: {
     flex: 1,

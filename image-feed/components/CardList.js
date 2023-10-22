@@ -1,4 +1,4 @@
-import { FlatList } from 'react-native';
+import { FlatList, StyleSheet, View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -37,11 +37,21 @@ export default class CardList extends React.Component {
     );
   };
 
+  renderHeader = () => {
+    return (
+      <View>
+        <Text style={styles.header}>Unsplash Photos</Text>
+      </View>
+    );
+  };
+
   render() {
     const { items, commentsForItem } = this.props;
 
     return (
       <FlatList
+        ListHeaderComponent={this.renderHeader}
+        stickyHeaderIndices={[0]}
         data={items}
         extraData={commentsForItem}
         renderItem={this.renderItem}
@@ -50,3 +60,21 @@ export default class CardList extends React.Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  header: {
+    flex: 1,
+    backgroundColor: '#336699',
+    alignItems: 'center',
+    justifyContent: 'center',
+    textAlign: 'center',
+    height: 65,
+    color: 'white',
+    fontSize: 30,
+    padding: 10,
+    fontWeight: 'bold',
+    textShadowOffset: { width: 4, height: 4 },
+    textShadowRadius: 15,
+    textShadowColor: '#000',
+  },
+});

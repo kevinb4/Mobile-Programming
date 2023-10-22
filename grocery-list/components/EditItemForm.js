@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, TextInput } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Image } from 'react-native';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -9,6 +9,7 @@ export default class EditItemForm extends React.Component {
     id: PropTypes.string,
     item: PropTypes.string,
     quantity: PropTypes.number,
+    image: PropTypes.number,
     isPurchased: PropTypes.bool,
     onFormSubmit: PropTypes.func.isRequired,
     onFormClose: PropTypes.func.isRequired,
@@ -24,11 +25,12 @@ export default class EditItemForm extends React.Component {
   constructor(props) {
     super(props);
 
-    const { id, item, quantity, isPurchased } = props;
+    const { id, item, quantity, image, isPurchased } = props;
 
     this.state = {
       item: id ? item : '',
       quantity: id ? quantity : 0,
+      image: id ? image : require('../assets/products/placeholder.png'),
       isPurchased: id ? isPurchased : false,
     };
   }
@@ -60,53 +62,52 @@ export default class EditItemForm extends React.Component {
   };
 
   render() {
-    const { id, onFormClose, isPurchased } = this.props;
+    const { id, onFormClose, isPurchased, image } = this.props;
     const { item, quantity } = this.state;
 
     const submitText = id ? 'Update' : 'Create';
     const purchaseStatus = isPurchased ? 'This item has been purchased' : 'This item has not yet been purchased';
+    const source = image || require('../assets/products/placeholder.png');
 
     return (
       <View style={styles.formContainer}>
-        <View style={styles.attributeContainer}>
-          <Text style={styles.textInputitem}>Item</Text>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              style={styles.textInput}
-              underlineColorAndroid="transparent"
-              onChangeText={this.handleItemChange}
-              value={item}
+        <View style={styles.row}>
+          <View style={[styles.attributeContainer, { flex: 1 }]}>
+            <Text style={styles.textInputItem}>{item}</Text>
+            <Image
+              source={source}
+              style={styles.image}
             />
           </View>
-        </View>
-        <View style={styles.attributeContainer}>
-          <Text style={styles.textInputitem}>Quantity</Text>
-          <View style={styles.textInputContainer}>
-            <TextInput
-              keyboardType="numeric"
-              style={styles.textInput}
-              underlineColorAndroid="transparent"
-              onChangeText={this.handleQuantityChange}
-              value={quantity.toString()}
-            />
+          <View style={styles.quantity}>
+            <Text style={styles.textInputItem}>Quantity</Text>
+            <View style={styles.textInputContainer}>
+              <TextInput
+                keyboardType="numeric"
+                style={styles.textInput}
+                underlineColorAndroid="transparent"
+                onChangeText={this.handleQuantityChange}
+                value={quantity.toString()}
+              />
+            </View>
           </View>
         </View>
         <View style={styles.attributeContainer}>
           <Text style={styles.purchaseStatus}>{purchaseStatus}</Text>
         </View>
         <View style={styles.buttonGroup}>
-          <ItemButton
+          <View style={[ styles.button, {backgroundColor: '#21BA45' }]}><ItemButton
             small
-            color="#21BA45"
+            color="white"
             item={submitText}
             onPress={this.handleSubmit}
-          />
-          <ItemButton
+          /></View>
+          <View style={[ styles.button, {backgroundColor: '#DB2828' }]}><ItemButton
             small
-            color="#DB2828"
+            color="white"
             item="Cancel"
             onPress={onFormClose}
-          />
+          /></View>
         </View>
       </View>
     );
@@ -114,6 +115,26 @@ export default class EditItemForm extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  button: {
+    borderRadius: 5,
+    marginTop: 5,
+    margin: 'auto'
+  },
+  row: {
+    flexDirection: 'row',
+  },
+  quantity: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  imageBox: {
+    flex: 1,
+  },
   formContainer: {
     backgroundColor: 'white',
     borderColor: '#D6D7DA',
@@ -137,7 +158,7 @@ const styles = StyleSheet.create({
     padding: 5,
     fontSize: 12,
   },
-  textInputitem: {
+  textInputItem: {
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,

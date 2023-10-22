@@ -9,6 +9,7 @@ export default class EditableItem extends React.Component {
     id: PropTypes.string.isRequired,
     item: PropTypes.string.isRequired,
     quantity: PropTypes.number.isRequired,
+    image: PropTypes.number,
     isPurchased: PropTypes.bool.isRequired,
     onFormSubmit: PropTypes.func.isRequired,
     onRemovePress: PropTypes.func.isRequired,
@@ -48,6 +49,7 @@ export default class EditableItem extends React.Component {
       id,
       item,
       quantity,
+      image,
       isPurchased,
       onRemovePress,
       onPurchase,
@@ -61,6 +63,7 @@ export default class EditableItem extends React.Component {
           id={id}
           item={item}
           quantity={quantity}
+          image={image}
           isPurchased={isPurchased}
           onFormSubmit={this.handleSubmit}
           onFormClose={this.handleFormClose}
@@ -73,6 +76,7 @@ export default class EditableItem extends React.Component {
         id={id}
         item={item}
         quantity={quantity}
+        image={image}
         isPurchased={isPurchased}
         onEditPress={this.handleEditPress}
         onRemovePress={onRemovePress}
