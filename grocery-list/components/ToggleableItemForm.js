@@ -42,11 +42,11 @@ export default class ToggleableItemForm extends Component {
             onFormClose={this.handleFormClose}
           />
         ) : (
-          <Button
-            item="+"
+          <View style={styles.addButton}><Button
+            item="Add Item"
             color="white"
             onPress={this.handleFormOpen}
-          />
+          /></View>
         )}
       </View>
     );
@@ -54,6 +54,11 @@ export default class ToggleableItemForm extends Component {
 }
 
 const styles = StyleSheet.create({
+  addButton: {
+    marginTop: 10,
+    backgroundColor: 'red',
+    borderRadius: 5,
+  },
   container: {
     paddingVertical: 10,
   },

@@ -1,10 +1,15 @@
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text, Modal } from 'react-native';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 
 import Button from './Button';
+import Note from '../screens/Note';
 
 export default class Item extends Component {
+  state = {
+    showModal: false,
+  };
+
   static propTypes = {
     id: PropTypes.string.isRequired,
     item: PropTypes.string.isRequired,
@@ -35,6 +40,20 @@ export default class Item extends Component {
     onRemovePress(id);
   };
 
+  openNoteScreen = id => {
+    this.setState({
+      showModal: true,
+      selectedItemId: id,
+    });
+  };
+
+  closeNoteScreen = () => {
+    this.setState({
+      showModal: false,
+      selectedItemId: null,
+    });
+  };
+
   renderActionButton() {
     const { isPurchased } = this.props;
 
@@ -58,7 +77,8 @@ export default class Item extends Component {
   }
 
   render() {
-    const { item, quantity, onEditPress, image } = this.props;
+    const { id, item, quantity, onEditPress, image, note } = this.props;
+    const { showModal } = this.state;
 
     var source = image || require('../assets/products/placeholder.png');
 
@@ -69,10 +89,12 @@ export default class Item extends Component {
           <Text style={styles.quantity}>Quantity: {quantity}</Text>
         </View>
         <View style={styles.imageBox}>
-          <Image
-              source={source}
-              style={styles.image}
-          />
+        <View style={[ styles.button, {backgroundColor: 'gray' }]}><Button
+            color="white"
+            small
+            item="View Notes"
+            onPress={this.openNoteScreen}
+          /></View>
         </View>
         <View style={styles.buttonGroup}>
         <View style={[ styles.button, {backgroundColor: 'blue' }]}><Button
@@ -89,6 +111,18 @@ export default class Item extends Component {
           /></View>
         </View>
         {this.renderActionButton()}
+
+        <Modal
+          visible={showModal}
+          animationType="slide"
+          onRequestClose={this.closeNoteScreen}
+        >
+          <Note
+            id={this.state.selectedItemId}
+            note={note}
+            onClose={this.closeNoteScreen}
+          />
+        </Modal>
       </View>
     );
   }

@@ -1180,6 +1180,13 @@
     "@types/yargs" "^15.0.0"
     "chalk" "^3.0.0"
 
+"@react-native-async-storage/async-storage@^1.19.3":
+  "integrity" "sha512-CwGfoHCWdPOTPS+2fW6YRE1fFBpT9++ahLEroX5hkgwyoQ+TkmjOaUxixdEIoVua9Pz5EF2pGOIJzqOTMWfBlA=="
+  "resolved" "https://registry.npmjs.org/@react-native-async-storage/async-storage/-/async-storage-1.19.3.tgz"
+  "version" "1.19.3"
+  dependencies:
+    "merge-options" "^3.0.4"
+
 "@react-native-community/cli-debugger-ui@^4.13.1":
   "integrity" "sha512-UFnkg5RTq3s2X15fSkrWY9+5BKOFjihNSnJjTV2H5PtTUFbd55qnxxPw8CxSfK0bXb1IrSvCESprk2LEpqr5cg=="
   "resolved" "https://registry.npmjs.org/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-4.13.1.tgz"
@@ -2321,6 +2328,7 @@
     "dot-case" "^1.1.0"
     "is-lower-case" "^1.1.0"
     "is-upper-case" "^1.1.0"
+    "item-case" "^1.1.0"
     "lower-case" "^1.1.1"
     "lower-case-first" "^1.0.0"
     "param-case" "^1.1.0"
@@ -2329,7 +2337,6 @@
     "sentence-case" "^1.1.1"
     "snake-case" "^1.1.0"
     "swap-case" "^1.1.0"
-    "item-case" "^1.1.0"
     "upper-case" "^1.1.1"
     "upper-case-first" "^1.1.0"
 
@@ -4767,6 +4774,11 @@
   "resolved" "https://registry.npmjs.org/is-obj/-/is-obj-1.0.1.tgz"
   "version" "1.0.1"
 
+"is-plain-obj@^2.1.0":
+  "integrity" "sha512-YWnfyRwxL/+SsrWYfOpUtz5b3YD+nyfkHvjbcanzk8zgyO4ASD67uVMRt8k5bM4lLMDnXfriRhOpemw+NfT1eA=="
+  "resolved" "https://registry.npmjs.org/is-plain-obj/-/is-plain-obj-2.1.0.tgz"
+  "version" "2.1.0"
+
 "is-plain-object@^2.0.3", "is-plain-object@^2.0.4":
   "integrity" "sha512-h5PpgXkWitc38BBMYawTYMWJHFZJVnBquFE57xFpjB8pJFiF6gZ+bU+WyI/yqXiFR5mdLsgYNaPe8uao6Uv9Og=="
   "resolved" "https://registry.npmjs.org/is-plain-object/-/is-plain-object-2.0.4.tgz"
@@ -4919,6 +4931,14 @@
   "integrity" "sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo="
   "resolved" "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz"
   "version" "0.1.2"
+
+"item-case@^1.1.0":
+  "integrity" "sha1-+uSmrlRr+iLQg6DuqRCkDRLtT1o="
+  "resolved" "https://registry.npmjs.org/item-case/-/item-case-1.1.2.tgz"
+  "version" "1.1.2"
+  dependencies:
+    "sentence-case" "^1.1.1"
+    "upper-case" "^1.0.3"
 
 "items@2.x.x":
   "integrity" "sha512-kezcEqgB97BGeZZYtX/MA8AG410ptURstvnz5RAgyFZ8wQFPMxHY8GpTq+/ZHKT3frSlIthUq7EvLt9xn3TvXg=="
@@ -5492,6 +5512,13 @@
   "integrity" "sha1-sAqqVW3YtEVoFQ7J0blT8/kMu2E="
   "resolved" "https://registry.npmjs.org/merge-descriptors/-/merge-descriptors-1.0.1.tgz"
   "version" "1.0.1"
+
+"merge-options@^3.0.4":
+  "integrity" "sha512-2Sug1+knBjkaMsMgf1ctR1Ujx+Ayku4EdJN4Z+C2+JzoeF7A3OZ9KM2GY0CpQS51NR61LTurMJrRKPhSs3ZRTQ=="
+  "resolved" "https://registry.npmjs.org/merge-options/-/merge-options-3.0.4.tgz"
+  "version" "3.0.4"
+  dependencies:
+    "is-plain-obj" "^2.1.0"
 
 "merge-stream@^1.0.1":
   "integrity" "sha1-QEEgLVCKNCugAXQAjfDCUbjBNeE="
@@ -6945,7 +6972,7 @@
     "prop-types" "^15.6.0"
     "react-timer-mixin" "^0.13.4"
 
-"react-native@*", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.56", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz":
+"react-native@*", "react-native@^0.0.0-0 || 0.60 - 0.72 || 1000.0.0", "react-native@>=0.42.0", "react-native@>=0.48.4", "react-native@>=0.56", "react-native@>=0.62.0-rc.0 <0.64.0", "react-native@https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz":
   "integrity" "sha512-xb7qKCp5pJotQLMUQkF2vr6DxRFVkUeXj3m+tjrBXL8l3FMjHwR3hOiXmTPOGJXKszwvv6CK2yU9RLzh76g4/g=="
   "resolved" "https://github.com/expo/react-native/archive/sdk-39.0.3.tar.gz"
   "version" "0.63.2"
@@ -8203,14 +8230,6 @@
   "integrity" "sha1-JaZ/LG4lOyypQZd7XvdELvl6YEY="
   "resolved" "https://registry.npmjs.org/tiny-queue/-/tiny-queue-0.2.1.tgz"
   "version" "0.2.1"
-
-"item-case@^1.1.0":
-  "integrity" "sha1-+uSmrlRr+iLQg6DuqRCkDRLtT1o="
-  "resolved" "https://registry.npmjs.org/item-case/-/item-case-1.1.2.tgz"
-  "version" "1.1.2"
-  dependencies:
-    "sentence-case" "^1.1.1"
-    "upper-case" "^1.0.3"
 
 "tmp@^0.0.33":
   "integrity" "sha512-jRCJlojKnZ3addtTOjdIqoRuPEKBvNXcGYqzO6zWZX8KfKEpnGY5jfggJQ3EjKuu8D4bJRr0y+cYJFmYbImXGw=="

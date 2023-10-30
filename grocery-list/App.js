@@ -2,6 +2,7 @@ import React from 'react';
 import 'react-native-get-random-values';
 import { v4 as uuidv4 } from "uuid";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {
   ImageBackground,
@@ -17,74 +18,71 @@ import EditableItem from './components/EditableItem';
 import Avatar from './components/Avatar';
 import getAvatarColor from './utils/getAvatarColor';
 import getInitials from './utils/getInitials';
-// import ToggleableItemForm from './components/ToggleableItemForm';
+import ToggleableItemForm from './components/ToggleableItemForm';
 
 const backgroundImage = require('./assets/grocery.jpg');
 
 export default class App extends React.Component {
   state = {
-    items: [
-      {
-        item: 'Bread',
-        quantity: 1,
-        image: require('./assets/products/bread.jpg'),
-        id: uuidv4(),
-        isPurchased: false,
-      },
-      {
-        item: 'Milk',
-        quantity: 1,
-        image: require('./assets/products/milk.png'),
-        id: uuidv4(),
-        isPurchased: false,
-      },
-      {
-        item: 'Olive Oil',
-        quantity: 1,
-        image: require('./assets/products/oliveoil.jpg'),
-        id: uuidv4(),
-        isPurchased: false,
-      },
-      {
-        item: 'Cereal',
-        quantity: 1,
-        image: require('./assets/products/cereal.jpg'),
-        id: uuidv4(),
-        isPurchased: false,
-      },
-      {
-        item: 'Carrots',
-        quantity: 1,
-        image: require('./assets/products/carrots.jpg'),
-        id: uuidv4(),
-        isPurchased: false,
-      },
-    ],
+    items: [],
+    showModal: false,
   };
 
-  handleFormSubmit = attrs => {
+  async componentDidMount() {
+    try {
+      const itemsList = await AsyncStorage.getItem('itemsList');
+
+      if (itemsList) {
+        this.setState({
+          items: JSON.parse(itemsList),
+        });
+      }
+    } catch (e) {
+      this.setState({
+        items: {},
+      });
+      console.log(e);
+    }
+  }
+
+  handleFormSubmit = async attrs => {
     const { items } = this.state;
 
-    this.setState({
-      items: items.map(itemData => {
-        if (itemData.id === attrs.id) {
-          const { item, quantity } = attrs;
+    const itemsList = items.map(itemData => {
+      if (itemData.id === attrs.id) {
+        const { item, quantity, note } = attrs;
 
-          return {
-            ...itemData,
-            item,
-            quantity,
-          };
-        }
+        return {
+          ...itemData,
+          item,
+          quantity,
+          note
+        };
+      }
 
-        return itemData;
-      }),
+      return itemData;
     });
+
+    this.setState({
+      items: itemsList,
+    });
+
+    try {
+      await AsyncStorage.setItem('itemsList', JSON.stringify(itemsList));
+    } catch (e) {
+      console.log('Failed to save the note, ', e);
+    }
   };
 
   handleRemovePress = itemId => {
     this.setState({
-      items: this.state.items.filter(t => t.id !== itemId),
+      items: this.state.items.filter(i => i.id !== itemId),
+    }, () => {
+      try {
+        AsyncStorage.setItem('itemsList', JSON.stringify(this.state.items));
+      } catch (e) {
+        console.log('Failed to save, ', e);
+      }
     });
   };
 
@@ -95,6 +93,12 @@ export default class App extends React.Component {
 
     this.setState({
       items: [item, ...items],
+    }, () => {
+      try {
+        AsyncStorage.setItem('itemsList', JSON.stringify(this.state.items));
+      } catch (e) {
+        console.log('Failed to save the note, ', e);
+      }
     });
   };
 
@@ -116,6 +120,12 @@ export default class App extends React.Component {
           return item;
         }),
       };
+    }, () => {
+      try {
+        AsyncStorage.setItem('itemsList', JSON.stringify(this.state.items));
+      } catch (e) {
+        console.log('Failed to save the note, ', e);
+      }
     });
   };
 
@@ -146,18 +156,18 @@ export default class App extends React.Component {
           style={styles.itemListContainer}
         >
           <ScrollView contentContainerStyle={styles.itemList}>
-            {/* this is no longer in the main app according to the example images*/}
-            {/* <ToggleableItemForm
+            <ToggleableItemForm
               onFormSubmit={this.handleCreateFormSubmit}
-            /> */}
+            />
             {items.map(
-              ({ item, quantity, id, isPurchased, image }) => (
+              ({ item, quantity, id, isPurchased, image, note }) => (
                 <EditableItem
                   key={id}
                   id={id}
                   item={item}
                   quantity={quantity}
                   image={image}
+                  note={note}
                   isPurchased={isPurchased}
                   onFormSubmit={this.handleFormSubmit}
                   onRemovePress={this.handleRemovePress}

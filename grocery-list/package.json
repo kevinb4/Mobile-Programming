@@ -13,6 +13,7 @@
     "eslint": "eslint \"**/*[!0-9].js\""
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.19.3",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
     "prop-types": "^15.8.1",

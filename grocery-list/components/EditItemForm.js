@@ -9,6 +9,7 @@ export default class EditItemForm extends React.Component {
     id: PropTypes.string,
     item: PropTypes.string,
     quantity: PropTypes.number,
+    note: PropTypes.string,
     image: PropTypes.number,
     isPurchased: PropTypes.bool,
     onFormSubmit: PropTypes.func.isRequired,
@@ -19,24 +20,30 @@ export default class EditItemForm extends React.Component {
     id: null,
     item: '',
     quantity: 0,
+    note: '',
     isPurchased: false,
   };
 
   constructor(props) {
     super(props);
 
-    const { id, item, quantity, image, isPurchased } = props;
+    const { id, item, quantity, image, isPurchased, note } = props;
 
     this.state = {
       item: id ? item : '',
       quantity: id ? quantity : 0,
       image: id ? image : require('../assets/products/placeholder.png'),
       isPurchased: id ? isPurchased : false,
+      note: id ? note : '',
     };
   }
 
   handleItemChange = item => {
     this.setState({ item });
+  };
+
+  handleNoteChange = note => {
+    this.setState({ note });
   };
 
   handleQuantityChange = quantity => {
@@ -51,19 +58,20 @@ export default class EditItemForm extends React.Component {
 
   handleSubmit = () => {
     const { onFormSubmit, id, isPurchased } = this.props;
-    const { item, quantity } = this.state;
+    const { item, quantity, note } = this.state;
 
     onFormSubmit({
       id,
       item,
       quantity,
       isPurchased,
+      note,
     });
   };
 
   render() {
     const { id, onFormClose, isPurchased, image } = this.props;
-    const { item, quantity } = this.state;
+    const { item, quantity, note } = this.state;
 
     const submitText = id ? 'Update' : 'Create';
     const purchaseStatus = isPurchased ? 'This item has been purchased' : 'This item has not yet been purchased';
@@ -72,12 +80,16 @@ export default class EditItemForm extends React.Component {
     return (
       <View style={styles.formContainer}>
         <View style={styles.row}>
-          <View style={[styles.attributeContainer, { flex: 1 }]}>
-            <Text style={styles.textInputItem}>{item}</Text>
-            <Image
-              source={source}
-              style={styles.image}
-            />
+          <View style={[styles.attributeContainer, { flex: 3, marginRight: 10 }]}>
+          <Text style={styles.textInputItem}>Product Name</Text>
+          <View style={styles.textInputContainer}>
+            <TextInput
+                style={styles.textInput}
+                underlineColorAndroid="transparent"
+                onChangeText={this.handleItemChange}
+                value={item}
+              />
+            </View>
           </View>
           <View style={styles.quantity}>
             <Text style={styles.textInputItem}>Quantity</Text>
@@ -90,6 +102,19 @@ export default class EditItemForm extends React.Component {
                 value={quantity.toString()}
               />
             </View>
+          </View>
+        </View>
+        <View style={styles.attributeContainer}>
+          <Text style={styles.textInputItem}>Notes</Text>
+          <View style={styles.textInputContainer}>
+            <TextInput
+              style={styles.textInputNotes}
+              underlineColorAndroid="transparent"
+              onChangeText={this.handleNoteChange}
+              multiline={true}
+              textAlignVertical="top"
+              value={note}
+            />
           </View>
         </View>
         <View style={styles.attributeContainer}>
@@ -162,6 +187,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: 'bold',
     marginBottom: 5,
+  },
+  textInputNotes: {
+    height: 100,
+    padding: 5,
+    fontSize: 12,
   },
   purchaseStatus: {
     fontWeight: 'bold',
