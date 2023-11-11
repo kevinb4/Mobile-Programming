@@ -1,5 +1,6 @@
 import {
   FlatList,
+  Linking,
   Image,
   StyleSheet,
   Text,
@@ -7,6 +8,7 @@ import {
   View,
 } from 'react-native';
 import MapView from 'react-native-maps';
+import Hyperlink from 'react-native-hyperlink';
 import PropTypes from 'prop-types';
 import React from 'react';
 
@@ -18,10 +20,16 @@ export default class MessageList extends React.Component {
   static propTypes = {
     messages: PropTypes.arrayOf(MessageShape).isRequired,
     onPressMessage: PropTypes.func,
+    onLongPressMessage: PropTypes.func,
   };
 
   static defaultProps = {
-    onPressMessage: () => {},
+    onPressMessage: () => { },
+    onLongPressMessage: () => { },
+  };
+
+  handleLinkPress = url => {
+    Linking.openURL(url);
   };
 
   renderMessageBody = ({ type, text, uri, coordinate }) => {
@@ -29,7 +37,9 @@ export default class MessageList extends React.Component {
       case 'text':
         return (
           <View style={styles.messageBubble}>
-            <Text style={styles.text}>{text}</Text>
+            <Hyperlink linkStyle={styles.link} onPress={this.handleLinkPress}>
+              <Text style={styles.text}>{text}</Text>
+            </Hyperlink>
           </View>
         );
       case 'image':
@@ -53,11 +63,11 @@ export default class MessageList extends React.Component {
   };
 
   renderMessageItem = ({ item }) => {
-    const { onPressMessage } = this.props;
+    const { onPressMessage, onLongPressMessage } = this.props;
 
     return (
       <View key={item.id} style={styles.messageRow}>
-        <TouchableOpacity onPress={() => onPressMessage(item)}>
+        <TouchableOpacity onPress={() => onPressMessage(item)} onLongPress={() => onLongPressMessage(item)}>
           {this.renderMessageBody(item)}
         </TouchableOpacity>
       </View>
@@ -111,5 +121,8 @@ const styles = StyleSheet.create({
     width: 250,
     height: 250,
     borderRadius: 10,
+  },
+  link: {
+    textDecorationLine: 'underline',
   },
 });

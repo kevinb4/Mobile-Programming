@@ -26,6 +26,7 @@ import Toolbar from './components/Toolbar';
 export default class App extends React.Component {
   state = {
     messages: [
+      createTextMessage('Go to google: https://www.google.com'),
       createImageMessage('https://unsplash.it/300/300'),
       createTextMessage('World'),
       createTextMessage('Hello'),
@@ -114,30 +115,31 @@ export default class App extends React.Component {
 
   handlePressMessage = ({ id, type }) => {
     switch (type) {
-      case 'text':
-        Alert.alert(
-          'Delete message?',
-          'Are you sure you want to permanently delete this message?',
-          [
-            {
-              text: 'Cancel',
-              style: 'cancel',
-            },
-            {
-              text: 'Delete',
-              style: 'destructive',
-              onPress: () => {
-                const { messages } = this.state;
-                this.setState({
-                  messages: messages.filter(
-                    message => message.id !== id,
-                  ),
-                });
-              },
-            },
-          ],
-        );
-        break;
+      // moved to handleLongPressMessage
+      // case 'text':
+      //   Alert.alert(
+      //     'Delete message?',
+      //     'Are you sure you want to permanently delete this message?',
+      //     [
+      //       {
+      //         text: 'Cancel',
+      //         style: 'cancel',
+      //       },
+      //       {
+      //         text: 'Delete',
+      //         style: 'destructive',
+      //         onPress: () => {
+      //           const { messages } = this.state;
+      //           this.setState({
+      //             messages: messages.filter(
+      //               message => message.id !== id,
+      //             ),
+      //           });
+      //         },
+      //       },
+      //     ],
+      //   );
+      //   break;
       case 'image':
         this.setState({
           fullscreenImageId: id,
@@ -149,6 +151,31 @@ export default class App extends React.Component {
     }
   };
 
+  handleLongPressMessage = ({ id }) => {
+    Alert.alert(
+      'Delete message?',
+      'Are you sure you want to permanently delete this message?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Delete',
+          style: 'destructive',
+          onPress: () => {
+            const { messages } = this.state;
+            this.setState({
+              messages: messages.filter(
+                message => message.id !== id,
+              ),
+            });
+          },
+        },
+      ],
+    );
+  };
+
   renderMessageList() {
     const { messages } = this.state;
 
@@ -157,6 +184,7 @@ export default class App extends React.Component {
         <MessageList
           messages={messages}
           onPressMessage={this.handlePressMessage}
+          onLongPressMessage={this.handleLongPressMessage}
         />
       </View>
     );
