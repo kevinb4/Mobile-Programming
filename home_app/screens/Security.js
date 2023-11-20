@@ -8,7 +8,7 @@ export default function SecurityScreen() {
 			<Text>This is where home alarms can be setup and turned on/off.</Text>
 			<View style={ styles.button }><FontAwesome.Button name="plus">Add Alarm</FontAwesome.Button></View>
 			<View style={ styles.button }><FontAwesome.Button name="minus">Delete Alarm</FontAwesome.Button></View>
-			<View style={ styles.button }><FontAwesome.Button name="bolt">Add/Remove Alarm</FontAwesome.Button></View>
+			<View style={ styles.button }><FontAwesome.Button name="bolt">Enable/Disable Alarm</FontAwesome.Button></View>
 		</View>
   	);
 }
